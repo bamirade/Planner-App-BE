@@ -18,6 +18,17 @@ RSpec.describe TasksController, type: :controller do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq([task1, task2].as_json)
     end
+
+    it 'returns tasks for a specific category' do
+      category = FactoryBot.create(:category)
+      task1 = FactoryBot.create(:task, category: category)
+      task2 = FactoryBot.create(:task, category: category)
+
+      get :index, params: { category_id: category.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq([task1, task2].as_json)
+    end
   end
 
   describe 'GET #show' do

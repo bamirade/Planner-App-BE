@@ -3,7 +3,12 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    if params[:category_id]
+      @category = Category.find(params[:category_id])
+      @tasks = @category.tasks
+    else
+      @tasks = Task.all
+    end
 
     render json: @tasks
   end
@@ -46,6 +51,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:name, :description, :due_date, :category_id)
+      params.require(:task).permit(:name, :description, :due_date, :category_id, :is_completed)
     end
 end
