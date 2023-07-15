@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start 'rails'
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
