@@ -26,7 +26,7 @@ module Journal
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:5173' # Update with your client-side application's URL
+        origins '*' # Update with your client-side application's URL
 
         resource '*',
           headers: :any,
