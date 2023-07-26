@@ -53,3 +53,4 @@ end
 
 
 gem 'rack-cors'
+gem 'devise'
