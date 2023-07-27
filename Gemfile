@@ -44,6 +44,9 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem "simplecov"
+  gem 'database_cleaner'
+  gem 'timecop'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -53,4 +56,5 @@ end
 
 
 gem 'rack-cors'
-gem 'devise'
+gem 'jwt'
+gem 'bcrypt'
