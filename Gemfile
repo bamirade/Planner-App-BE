@@ -47,6 +47,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'timecop'
   gem 'rails-controller-testing'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -58,3 +59,4 @@ end
 gem 'rack-cors'
 gem 'jwt'
 gem 'bcrypt'
+gem 'pg'

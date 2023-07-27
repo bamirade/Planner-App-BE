@@ -26,7 +26,6 @@ RSpec.describe ApplicationController, type: :controller do
       user = FactoryBot.create(:user)
       expired_token = AuthHelper.generate_token(user.id)
 
-      # Manually set the token's expiration to a time in the past
       token_with_expired_time = JWT.encode({ user_id: user.id, exp: Time.now.to_i - 3600 }, AuthHelper::SECRET_KEY, 'HS256')
       request.headers['Authorization'] = "Bearer #{token_with_expired_time}"
 
