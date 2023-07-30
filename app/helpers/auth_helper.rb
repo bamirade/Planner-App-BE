@@ -1,5 +1,5 @@
 module AuthHelper
-  SECRET_KEY = Rails.application.secrets.secret_key_base
+  SECRET_KEY = ENV['SECRET_KEY_BASE']
 
   def self.generate_token(user_id)
     payload = { user_id: user_id }
