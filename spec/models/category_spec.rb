@@ -14,9 +14,10 @@ RSpec.describe Category, type: :model do
 
   describe 'associations' do
     it 'has many tasks' do
-      category = FactoryBot.create(:category)
-      task1 = FactoryBot.create(:task, category: category)
-      task2 = FactoryBot.create(:task, category: category)
+      user = FactoryBot.create(:user)
+      category = FactoryBot.create(:category, user: user)
+      task1 = FactoryBot.create(:task, category: category, user: user)
+      task2 = FactoryBot.create(:task, category: category, user: user)
       expect(category.tasks).to include(task1, task2)
     end
   end

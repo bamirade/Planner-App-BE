@@ -1,17 +1,24 @@
 require 'simplecov'
 SimpleCov.start 'rails'
+
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
+  let(:current_user) { FactoryBot.create(:user) }
+  let(:token) { AuthHelper.generate_token(current_user.id) }
+  let(:headers) { { 'Authorization' => "Bearer #{token}" } }
+
   describe 'GET #index' do
     it 'returns a success response' do
+      request.headers.merge!(headers)
       get :index
       expect(response).to be_successful
     end
 
     it 'returns all categories' do
-      category1 = FactoryBot.create(:category)
-      category2 = FactoryBot.create(:category)
+      request.headers.merge!(headers)
+      category1 = FactoryBot.create(:category, user: current_user)
+      category2 = FactoryBot.create(:category, user: current_user)
 
       get :index
 
@@ -22,7 +29,8 @@ RSpec.describe CategoriesController, type: :controller do
 
   describe 'GET #show' do
     it 'returns a success response' do
-      category = FactoryBot.create(:category)
+      request.headers.merge!(headers)
+      category = FactoryBot.create(:category, user: current_user)
       get :show, params: { id: category.to_param }
       expect(response).to be_successful
     end
@@ -31,20 +39,23 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new category' do
+        request.headers.merge!(headers)
         expect {
-          post :create, params: { category: { name: 'Test Category' } }
+          post :create, params: { category: { name: 'Test Category', user: current_user } }
         }.to change(Category, :count).by(1)
       end
 
       it 'returns a created response' do
-        post :create, params: { category: { name: 'Test Category' } }
+        request.headers.merge!(headers)
+        post :create, params: { category: { name: 'Test Category', user: current_user } }
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid params' do
       it 'returns an unprocessable entity response' do
-        post :create, params: { category: { name: nil } }
+        request.headers.merge!(headers)
+        post :create, params: { category: { name: nil, user: current_user } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -53,7 +64,8 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'PATCH #update' do
     context 'with valid params' do
       it 'updates the requested category' do
-        category = FactoryBot.create(:category)
+        request.headers.merge!(headers)
+        category = FactoryBot.create(:category, user: current_user)
         new_name = 'New Category Name'
 
         patch :update, params: { id: category.to_param, category: { name: new_name } }
@@ -63,7 +75,8 @@ RSpec.describe CategoriesController, type: :controller do
       end
 
       it 'returns a success response' do
-        category = FactoryBot.create(:category)
+        request.headers.merge!(headers)
+        category = FactoryBot.create(:category, user: current_user)
         patch :update, params: { id: category.to_param, category: { name: 'New Category Name' } }
         expect(response).to have_http_status(:ok)
       end
@@ -71,7 +84,8 @@ RSpec.describe CategoriesController, type: :controller do
 
     context 'with invalid params' do
       it 'returns an unprocessable entity response' do
-        category = FactoryBot.create(:category)
+        request.headers.merge!(headers)
+        category = FactoryBot.create(:category, user: current_user)
         patch :update, params: { id: category.to_param, category: { name: nil } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -80,7 +94,8 @@ RSpec.describe CategoriesController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested category' do
-      category = FactoryBot.create(:category)
+      request.headers.merge!(headers)
+      category = FactoryBot.create(:category, user: current_user)
       expect {
         delete :destroy, params: { id: category.to_param }
       }.to change(Category, :count).by(-1)

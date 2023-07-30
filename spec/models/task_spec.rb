@@ -1,5 +1,6 @@
 require 'simplecov'
 SimpleCov.start 'rails'
+
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
@@ -25,8 +26,9 @@ RSpec.describe Task, type: :model do
 
   describe 'associations' do
     it 'belongs to a category' do
-      category = FactoryBot.create(:category)
-      task = FactoryBot.create(:task, category: category)
+      user = FactoryBot.create(:user)
+      category = FactoryBot.create(:category, user: user)
+      task = FactoryBot.create(:task, category: category, user: user)
       expect(task.category).to eq(category)
     end
   end
