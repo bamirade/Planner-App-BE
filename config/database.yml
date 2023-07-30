@@ -5,14 +5,15 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: postgresql
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  URL: <%= ENV['ELEPHANTSQL_URL'] %>
-  port: 5432
 
 development:
   <<: *default
+  adapter: postgresql
+  URL: <%= ENV['ELEPHANTSQL_URL'] %>
+  port: 5432
   database: Planner-App
 
 # Warning: The database defined as "test" will be erased and
@@ -20,8 +21,14 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  adapter: postgresql
+  URL: <%= ENV['ELEPHANTSQL_URL'] %>
+  port: 5432
   database: Planner-App
 
 production:
   <<: *default
+  adapter: postgresql
+  URL: <%= ENV['ELEPHANTSQL_URL'] %>
+  port: 5432
   database: Planner-App
