@@ -44,9 +44,19 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem "simplecov"
+  gem 'database_cleaner'
+  gem 'timecop'
+  gem 'rails-controller-testing'
+  gem 'dotenv-rails'
 end
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+
+gem 'rack-cors'
+gem 'jwt'
+gem 'bcrypt'
+gem 'pg'
