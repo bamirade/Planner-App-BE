@@ -5,16 +5,13 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: 5
   timeout: 5000
 
 development:
   <<: *default
-  adapter: postgresql
-  URL: <%= ENV['ELEPHANTSQL_URL'] %>
-  port: 5432
-  database: Planner-App
+  adapter: sqlite3
+  database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,6 +24,6 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  URL: <%= ENV['ELEPHANTSQL_URL'] %>
-  port: 5432
-  database: Planner-App
+  database: Stock-App-Gecko_production
+  url: <%= ENV['ELEPHANTSQL_URL'] %>
+  sslmode: require
