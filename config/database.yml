@@ -21,10 +21,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  adapter: postgresql
-  URL: <%= ENV['ELEPHANTSQL_URL'] %>
-  port: 5432
-  database: Planner-App
+  adapter: sqlite3
+  database: db/test.sqlite3
 
 production:
   <<: *default
